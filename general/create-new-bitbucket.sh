@@ -91,9 +91,11 @@ final_url="$final_url/$repo_slug"
 curl_result=$(curl --silent --user $user -X POST -H "Content-Type: application/json" -d "{ $posted_data }" $final_url)
 clone_url=$(echo $curl_result | jq '.links.clone[0].href')
 
+# echo $clone_url
 if [ $clone_url ] && [ "$clone_url" != "null" ] && [ "$clone_url" != "" ]; then
   echo "Project '$repo_slug' created on Bitbucket!"
   if [ "$remote" == "true" ] || [ "$remote" == "1" ]; then
+    clone_url=$(echo "${clone_url:1:${#clone_url}-2}")
     git remote add origin $clone_url
     echo "Remote 'origin' for project '$repo_slug' added!"
   fi  
