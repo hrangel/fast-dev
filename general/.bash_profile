@@ -12,6 +12,3 @@ alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.
 
 alias mysql-start="mysql.server start"
 alias mysql-stop="mysql.server stop"
-
-alias newGithub="~/fast-dev/general/create-new-github.sh"
-alias newBitbucket="~/fast-dev/general/create-new-github.sh"
