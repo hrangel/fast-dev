@@ -1,5 +1,10 @@
 # Onboarding Skip #
 
+Pre requirments
+
+- Install JQ
+https://stedolan.github.io/jq/download/
+
 To install:
 
 ```

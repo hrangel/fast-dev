@@ -20,6 +20,7 @@ name=""
 description=""
 team=""
 project_key=""
+remote="true"
 
 if [ "$1" == "" ]; then
   usage
@@ -41,8 +42,8 @@ while [ "$1" != "" ]; do
         -u | --user)
           user=$VALUE
           ;;
-        -name | --name)
-          repo_name=$VALUE
+        -n | --name)
+          name=$VALUE
           ;;
         -d | --desc)
           description=$VALUE
@@ -52,6 +53,9 @@ while [ "$1" != "" ]; do
           ;;
         -p | --project)
           project_key=$VALUE
+          ;;
+        -r | --remote)
+          remote=$VALUE
           ;;
         *)
           repo_slug=$VALUE
@@ -66,7 +70,13 @@ if [ "$repo_slug" == "" ]; then
   exit 1
 fi  
 
-posted_data= "\"scm\": \"git\", \"name\": \"$name\", \"description\": \"$description\""
+if [ "$user" == "" ]; then
+  echo "ERROR: unknown user"
+  usage
+  exit 1
+fi  
+
+posted_data="\"scm\": \"git\", \"name\": \"$name\", \"description\": \"$description\""
 if [ "$project_key" != "" ]; then
   posted_data="$posted_data, \"project\": { \"key\": \"$project_key\" }"
 fi
@@ -76,5 +86,18 @@ if [ "$team" == "" ]; then
 else
   final_url="https://api.bitbucket.org/2.0/repositories/$user/$team"
 fi
+final_url="$final_url/$repo_slug"
 
-curl -X POST -H "Content-Type: application/json" -d "{ $posted_data }" $final_url
+curl_result=$(curl --silent --user $user -X POST -H "Content-Type: application/json" -d "{ $posted_data }" $final_url)
+clone_url=$(echo $curl_result | jq '.links.clone[0].href')
+
+if [ $clone_url ] && [ "$clone_url" != "null" ] && [ "$clone_url" != "" ]; then
+  echo "Project '$repo_slug' created on Bitbucket!"
+  if [ "$remote" == "true" ] || [ "$remote" == "1" ]; then
+    git remote add origin $clone_url
+    echo "Remote 'origin' for project '$repo_slug' added!"
+  fi  
+else
+  echo "Error creating project '$repo_slug'"
+  echo $curl_result
+fi
