@@ -13,14 +13,17 @@ if [ ! -f $FILE ]; then
   while [ "$BITBUCKET_USERNAME" == "" ]; do
     read 'BITBUCKET_USERNAME?Bitbucket Username: '
   done
-  GITHUB_USERNAME="$BITBUCKET_USERNAME"
+  GITHUB_USERNAME=""
   read "GITHUB_USERNAME?Github Username (enter for $BITBUCKET_USERNAME): "
+  if [ "$GITHUB_USERNAME" == "" ]; then
+    GITHUB_USERNAME="$BITBUCKET_USERNAME"
+  fi
 
   BASE_GIT="https://$BITBUCKET_USERNAME@bitbucket.org/"
-  onboarding_content="source ~/fast-dev/general/.bash_profile" >> $FILE
-  onboarding_content="export BITBUCKET_USERNAME=$BITBUCKET_USERNAME" >> $FILE
-  onboarding_content="export GITHUB_USERNAME=$GITHUB_USERNAME" >> $FILE
-  onboarding_content="export BASE_GIT=$BASE_GIT" >> $FILE
+  echo "source ~/fast-dev/general/.bash_profile" >> $FILE
+  echo "export BITBUCKET_USERNAME=$BITBUCKET_USERNAME" >> $FILE
+  echo "export GITHUB_USERNAME=$GITHUB_USERNAME" >> $FILE
+  echo "export BASE_GIT=$BASE_GIT" >> $FILE
 fi
 
 onboarding_source="source ~/$FILE_RELATIVE"

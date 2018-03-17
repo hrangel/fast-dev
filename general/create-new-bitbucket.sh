@@ -15,7 +15,7 @@ function usage()
 }
 
 repo_slug=""
-user=$BITBUCKET_USER
+user=$BITBUCKET_USERNAME
 name=""
 description=""
 team=""

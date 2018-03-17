@@ -16,7 +16,7 @@ function usage()
 }
 
 repo_name=""
-user=$GITHUB_USER
+user=$GITHUB_USERNAME
 description=""
 team=""
 org=""
@@ -98,7 +98,7 @@ fi
 
 echo "Creating project: $repo_name"
 curl_result=$(curl --silent -u $user $final_url -d "{ $posted_data }")
-clone_url_attr=$(echo $curl_result | grep -o "\"clone_url\": \".*")
+clone_url_attr=$(echo $curl_result | grep -o "\"clone_url\": \"[^\\\"]*\"")
 
 if [ "$clone_url_attr" == "" ]; then
   echo "Error creating project '$repo_name'"
@@ -107,9 +107,17 @@ else
   echo "Project '$repo_name' created!"
   if [ "$remote" == "true" ] || [ "$remote" == "1" ]; then
     # 14 => length of "clone_url": "
-    # -2 dois digitos a menos
-    final_clone_url=${clone_url_attr:14:-2}
+    # -1 dois digitos a menos
+    base_var=$(echo $clone_url_attr | tr -d '[:space:]')
+    base_var_len=${#base_var}
+    str_len=`expr $base_var_len - 13 - 1`
+    # echo ${base_var}
+    # echo ${base_var_len}
+    # echo ${str_len}
+    # echo ${base_var:13:$str_len}
 
-    git remote add origin $final_clone_url
+    clone_url=${base_var:13:$str_len}
+    git remote add origin $clone_url
+    echo "Remote 'origin' for project '$repo_name' added!"
   fi  
 fi
