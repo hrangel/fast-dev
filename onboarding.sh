@@ -1,9 +1,10 @@
 #!/bin/sh
 base_dir=$HOME
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 user_name=who | grep "console" | cut -d" " -f1
 mkdir -p "$base_dir/fast-dev"
 chmod -R 777 ~/fast-dev
-cp -a ./general/. "$base_dir/fast-dev/general"
+cp -a "$SCRIPT_DIR/general/." "$base_dir/fast-dev/general"
 
 FILE_RELATIVE="fast-dev/.bash_profile"
 FILE="$base_dir/$FILE_RELATIVE"
