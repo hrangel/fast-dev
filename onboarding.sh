@@ -1,6 +1,6 @@
 #!/bin/sh
 base_dir=$HOME
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 user_name=who | grep "console" | cut -d" " -f1
 mkdir -p "$base_dir/fast-dev"
 chmod -R 777 ~/fast-dev
