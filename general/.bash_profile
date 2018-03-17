@@ -3,7 +3,7 @@ alias publishToSpecific="~/fast-dev/general/publishTo.sh"
 alias publishToTeam="publishToSpecific team"
 alias publishToStaging="publishToSpecific staging"
 
-alias initGit="~/fast-dev/general/init-git-project.sh"
+alias initGit="source ~/fast-dev/general/init-git-project.sh"
 
 alias pg-start="launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"
 alias pg-stop="launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist"

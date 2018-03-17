@@ -2,8 +2,6 @@
 project_folder=${PWD##*/}
 echo "Setup GIT for $project_folder"
 
-cd $project_folder
-
 git init
 git checkout -b staging
 git checkout -b live
