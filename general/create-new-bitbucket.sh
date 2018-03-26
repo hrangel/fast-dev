@@ -8,7 +8,7 @@ function usage()
     echo "\t-h --help"
     echo "\t--user=BitBucketUser"
     echo "\t--name=name"
-    echo "\t--description=description"
+    echo "\t--desc=description"
     echo "\t--team=team"
     echo "\t--project=project_key"
     echo ""

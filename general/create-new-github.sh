@@ -8,7 +8,7 @@ function usage()
     echo "\trepo_name"
     echo "\t-h --help"
     echo "\t--user=GithubUser"
-    echo "\t--description=description"
+    echo "\t--desc=description"
     echo "\t--team=team"
     echo "\t--org=org"
     echo "\t--private=project_key"
